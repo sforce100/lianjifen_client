@@ -1,0 +1,28 @@
+defaults: &defaults
+  lianjifen:
+    online: true
+    api_host: 'https://bus-api.lianjifen.com'
+    app_key: ''
+    app_secret_key: ''
+    points_symbol: 'ONE'
+    points_name: ONE积分
+  lianjifen_app:
+    app_key: ''
+    app_secret_key: ''
+development:
+  <<: *defaults
+
+staging:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  lianjifen:
+    online: true
+    api_host: 'http://bus-api.lianjifen.com'
+    app_key: ''
+    app_secret_key: ''
+    points_symbol: ''
+  lianjifen_app:
+    app_key: ''
+    app_secret_key: ''
