@@ -4,7 +4,7 @@ module LianjifenClient
 
     def initialize(user: nil)
       @user = user
-      @points_symbol = LianjifenClient.config["lianjifen_points"]["symbol"]
+      @points_symbol = LianjifenClient.config["lianjifen"]["points_symbol"]
       @lianjifen_service = LianjifenService.new
     end
 

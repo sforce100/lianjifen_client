@@ -1,17 +1,14 @@
 defaults: &defaults
   lianjifen:
     online: true
-    api_host: 'http://bus-api.lianjifen.com'
-    app_key: 'wqa8r0kfcirvag53'
-    app_secret_key: '58ycg45ju5dlww1q229zzw8hnl8sai8t'
+    api_host: 'https://bus-api.lianjifen.com'
+    app_key: ''
+    app_secret_key: ''
     points_symbol: 'ONE'
+    points_name: ONE积分
   lianjifen_app:
-    app_key: '2thlmbeji4srw8woyy3iso81c29kfxjx'
-    app_secret_key: '78dxr3n5bx3xxu4dba8wyu4ykgxrmjnh'
-  lianjifen_points:
-    symbol_name: ONE积分
-    symbol: ONE
-    symbol_icon: "http://icons.iconarchive.com/icons/marcus-roberto/google-play/512/Google-Chrome-icon.png"
+    app_key: ''
+    app_secret_key: ''
 development:
   <<: *defaults
 
@@ -29,7 +26,3 @@ production:
   lianjifen_app:
     app_key: ''
     app_secret_key: ''
-  lianjifen_points:
-    symbol_name: ''
-    symbol: ''
-    symbol_icon: ""
