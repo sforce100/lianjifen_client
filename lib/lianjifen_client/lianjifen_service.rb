@@ -146,7 +146,7 @@ module LianjifenClient
         phoneNumber: phone_number,
       }
       sign_data = SignUtil.generate_common_sign_data("lianjifen", request_data)
-      "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api#{base_uri}/v1/strategyApp/authPage?#{sign_data.to_query}"
+      "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api/v1/strategyApp/authPage?#{sign_data.to_query}"
     end
 
     # 生成预支付订单
