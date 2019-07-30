@@ -139,6 +139,31 @@ module LianjifenClient
       process_result(result)
     end
 
+    # 退分操作
+    def points_refund(transaction_id)
+      sign_data = {
+        transactionId: transaction_id,
+      }
+      result = JSON.parse(self.class.post(
+        "#{base_uri}/open/api/v1/merchant/billRefund?#{lianjifen_sign(sign_data).to_query}&page=#{page}&size=#{size}",
+        body: sign_data.to_json,
+        headers: {"Content-Type" => "application/json"},
+      ).body)
+      process_result(result)
+    end
+
+    # 查询是否能退分
+    def points_can_refund(transaction_id)
+      sign_data = {
+        transactionId: transaction_id,
+      }
+      result = JSON.parse(self.class.get(
+        "#{base_uri}/open/api/v1/merchant/canRefund",
+        query: lianjifen_sign(sign_data),
+      ).body)
+      process_result(result)
+    end
+
     # 生成授权登录URL
     def generate_auth_url(phone_number)
       request_data = {
@@ -180,6 +205,8 @@ module LianjifenClient
     end
 
     def process_result(result)
+      @request_result = result
+
       Rails.logger.info "lianjifen service result => #{result}"
       if result["meta"]["code"] == 0
         result["data"]
