@@ -145,7 +145,7 @@ module LianjifenClient
         transactionId: transaction_id,
       }
       result = JSON.parse(self.class.post(
-        "#{base_uri}/open/api/v1/merchant/billRefund?#{lianjifen_sign(sign_data).to_query}&page=#{page}&size=#{size}",
+        "#{base_uri}/v1/merchant/billRefund?#{lianjifen_sign(sign_data).to_query}&page=#{page}&size=#{size}",
         body: sign_data.to_json,
         headers: {"Content-Type" => "application/json"},
       ).body)
@@ -158,7 +158,7 @@ module LianjifenClient
         transactionId: transaction_id,
       }
       result = JSON.parse(self.class.get(
-        "#{base_uri}/open/api/v1/merchant/canRefund",
+        "#{base_uri}/v1/merchant/canRefund",
         query: lianjifen_sign(sign_data),
       ).body)
       process_result(result)
