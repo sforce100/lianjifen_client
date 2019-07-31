@@ -145,7 +145,7 @@ module LianjifenClient
         transactionId: transaction_id,
       }
       result = JSON.parse(self.class.post(
-        "#{base_uri}/v1/merchant/billRefund?#{lianjifen_sign(sign_data).to_query}&page=#{page}&size=#{size}",
+        "#{base_uri}/v1/merchant/billRefund?#{lianjifen_sign(sign_data).to_query}",
         body: sign_data.to_json,
         headers: {"Content-Type" => "application/json"},
       ).body)
