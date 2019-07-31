@@ -157,9 +157,10 @@ module LianjifenClient
       sign_data = {
         transactionId: transaction_id,
       }
+      query_hash = lianjifen_sign(sign_data)
       result = JSON.parse(self.class.get(
-        "#{base_uri}/v1/merchant/canRefund",
-        query: lianjifen_sign(sign_data),
+        "#{base_uri}/v1/merchant/canRefund?#{query_hash.to_query}",
+        query: query_hash,
       ).body)
       process_result(result)
     end
