@@ -175,6 +175,9 @@ module LianjifenClient
         request_data[:redirectUrl] = redirect_url
       end
       sign_data = SignUtil.generate_common_sign_data("lianjifen", request_data)
+      if redirect_url.present?
+        sign_data[:redirectUrl] = URI.encode(redirect_url)
+      end
       "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api/v1/strategyApp/authPage?#{sign_data.to_query}"
     end
 
