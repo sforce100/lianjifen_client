@@ -139,14 +139,43 @@ module LianjifenClient
       process_result(result)
     end
 
+    # 退分操作
+    def points_refund(transaction_id)
+      sign_data = {
+        transactionId: transaction_id,
+      }
+      result = JSON.parse(self.class.post(
+        "#{base_uri}/v1/merchant/billRefund?#{lianjifen_sign(sign_data).to_query}",
+        body: sign_data.to_json,
+        headers: {"Content-Type" => "application/json"},
+      ).body)
+      process_result(result)
+    end
+
+    # 查询是否能退分
+    def points_can_refund(transaction_id)
+      sign_data = {
+        transactionId: transaction_id,
+      }
+      query_hash = lianjifen_sign(sign_data)
+      result = JSON.parse(self.class.get(
+        "#{base_uri}/v1/merchant/canRefund?#{sign_data.to_query}",
+        query: query_hash,
+      ).body)
+      process_result(result)
+    end
+
     # 生成授权登录URL
-    def generate_auth_url(phone_number)
+    def generate_auth_url(phone_number, redirect_url=nil)
       request_data = {
         lappKey: LianjifenClient.config["lianjifen_app"]["app_key"],
         phoneNumber: phone_number,
       }
+      if redirect_url.present?
+        request_data[:redirectUrl] = redirect_url
+      end
       sign_data = SignUtil.generate_common_sign_data("lianjifen", request_data)
-      "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api#{base_uri}/v1/strategyApp/authPage?#{sign_data.to_query}"
+      "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api/v1/strategyApp/authPage?#{sign_data.to_query}"
     end
 
     # 生成预支付订单
@@ -180,6 +209,8 @@ module LianjifenClient
     end
 
     def process_result(result)
+      @request_result = result
+
       Rails.logger.info "lianjifen service result => #{result}"
       if result["meta"]["code"] == 0
         result["data"]

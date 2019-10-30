@@ -1,5 +1,6 @@
 module LianjifenClient
   class LianjifenBaseService
+    attr_accessor :request_result
 
     # 链积分商户
     def lianjifen_sign(request_data)
