@@ -181,6 +181,23 @@ module LianjifenClient
       "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api/v1/strategyApp/authPage?#{sign_data.to_query}"
     end
 
+    # 生成重置支付密码URL
+    # https://doc.xpayai.com/index.php?s=/17&page_id=1265
+    def generate_resetpw_url(token, redirect_url=nil)
+      request_data = {
+        lappKey: LianjifenClient.config["lianjifen_app"]["app_key"],
+        lianToken: token,
+      }
+      if redirect_url.present?
+        request_data[:redirectUrl] = redirect_url
+      end
+      sign_data = SignUtil.generate_common_sign_data("lianjifen", request_data)
+      if redirect_url.present?
+        sign_data[:redirectUrl] = URI.encode(redirect_url)
+      end
+      "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api/v1/strategyApp/setPassword?#{sign_data.to_query}"
+    end
+
     # 生成预支付订单
     def perpay_order(order_no: nil, amount: 0, remark: "", token: "")
       sign_data = {
