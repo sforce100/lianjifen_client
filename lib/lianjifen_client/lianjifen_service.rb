@@ -16,7 +16,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/merchant/user?#{lianjifen_sign(sign_data).to_query}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
@@ -32,7 +32,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/merchant/transfer?#{lianjifen_sign(sign_data).to_query}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
@@ -47,7 +47,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/merchant/consume?#{lianjifen_sign(sign_data).to_query}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
@@ -61,7 +61,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/merchant/refund?#{lianjifen_sign(sign_data).to_query}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
@@ -91,7 +91,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/user/types?#{lianjifen_sign(sign_data).to_query}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
@@ -110,7 +110,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/user/balance?#{lianjifen_sign(sign_data).to_query}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
@@ -134,7 +134,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/user/list/transaction?#{lianjifen_sign(sign_data).to_query}&page=#{page}&size=#{size}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
@@ -147,7 +147,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/merchant/billRefund?#{lianjifen_sign(sign_data).to_query}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
@@ -166,7 +166,7 @@ module LianjifenClient
     end
 
     # 生成授权登录URL
-    def generate_auth_url(phone_number, redirect_url=nil)
+    def generate_auth_url(phone_number, redirect_url = nil)
       request_data = {
         lappKey: LianjifenClient.config["lianjifen_app"]["app_key"],
         phoneNumber: phone_number,
@@ -183,15 +183,15 @@ module LianjifenClient
 
     # 生成重置支付密码URL
     # https://doc.xpayai.com/index.php?s=/17&page_id=1265
-    def generate_resetpw_url(token, redirect_url=nil)
+    def generate_resetpw_url(token, redirect_url = nil)
       request_data = {
-        lappKey: LianjifenClient.config["lianjifen_app"]["app_key"],
         lianToken: token,
       }
       if redirect_url.present?
         request_data[:redirectUrl] = redirect_url
       end
-      sign_data = SignUtil.generate_common_sign_data("lianjifen", request_data)
+      # sign_data = SignUtil.generate_common_sign_data("lianjifen", request_data)
+      sign_data = SignUtil.generate_lapp_sign_data("lianjifen_app", request_data)
       if redirect_url.present?
         sign_data[:redirectUrl] = URI.encode(redirect_url)
       end
@@ -209,7 +209,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/sa/transaction/generateOrder?#{lianjifen_lapp_sign(sign_data).to_query}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
@@ -223,7 +223,7 @@ module LianjifenClient
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/sa/transaction/refund?#{lianjifen_lapp_sign(sign_data).to_query}",
         body: sign_data.to_json,
-        headers: {"Content-Type" => "application/json"},
+        headers: { "Content-Type" => "application/json" },
       ).body)
       process_result(result)
     end
