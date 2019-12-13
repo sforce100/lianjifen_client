@@ -37,6 +37,23 @@ module LianjifenClient
       process_result(result)
     end
 
+    # 积分交易-转账
+    def sub_merchant_transfor(sub_uuid, point_symbol, phone_number, amount, mark = "")
+      sign_data = {
+        toId: phone_number,
+        symbol: point_symbol,
+        mark: mark,
+        amount: amount,
+        subUuid: sub_uuid,
+      }
+      result = JSON.parse(self.class.post(
+        "#{base_uri}/v2/merchant/transfer?#{lianjifen_sign(sign_data).to_query}",
+        body: sign_data.to_json,
+        headers: { "Content-Type" => "application/json" },
+      ).body)
+      process_result(result)
+    end
+
     # 积分交易-消费
     def merchant_consume(phone_number, amount, mark = "")
       sign_data = {
