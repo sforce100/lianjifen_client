@@ -7,12 +7,12 @@ module LianjifenClient
     end
 
     def event_info(event_id)
-      result = JSON.parse(self.class.get(
+      req = self.class.get(
         "#{base_uri}/activity/state",
         query: { subUuid: event_id },
         headers: { "Content-Type" => "application/json" },
-      ).body)
-      process_result(result)
+      )
+      req_process_result(req)
     end
   end
 end
