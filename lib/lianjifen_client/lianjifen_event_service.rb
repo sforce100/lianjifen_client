@@ -3,7 +3,7 @@ module LianjifenClient
     include HTTParty
 
     def base_uri
-      "#{LianjifenClient.config["lianjifen"]["op_api_host"]}/rujia/api"
+      "#{LianjifenClient.config["lianjifen"]["op_api_host"]}/lianjifen-operation/api"
     end
 
     def event_info(event_id)
