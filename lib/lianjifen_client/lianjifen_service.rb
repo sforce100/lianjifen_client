@@ -37,7 +37,7 @@ module LianjifenClient
       process_result(result)
     end
 
-    # 积分交易-转账
+    # 子账号 积分交易-转账
     def sub_merchant_transfor(sub_uuid, point_symbol, phone_number, amount, mark = "")
       sign_data = {
         toId: phone_number,
