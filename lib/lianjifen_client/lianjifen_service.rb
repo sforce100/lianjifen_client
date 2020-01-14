@@ -21,7 +21,7 @@ module LianjifenClient
       process_result(result)
     end
 
-    # 积分交易-转账
+    # 主账号 积分交易-转账
     def merchant_transfor(point_symbol, phone_number, amount, mark = "")
       sign_data = {
         toId: phone_number,
@@ -69,7 +69,7 @@ module LianjifenClient
       process_result(result)
     end
 
-    # 退款
+    # 消费退款（消费退款）回收账户->个人账号
     def refund(txid, mark = "")
       sign_data = {
         transactionId: txid,
@@ -156,7 +156,21 @@ module LianjifenClient
       process_result(result)
     end
 
-    # 退分操作
+    # 退分操作（个人账号->退分子账号）
+    def common_points_refund(uuid, transaction_id)
+      sign_data = {
+        transactionId: transaction_id,
+        accountUuid: uuid,
+      }
+      result = JSON.parse(self.class.post(
+        "#{base_uri}/v1/merchant/billRefundToAccount?#{lianjifen_sign(sign_data).to_query}",
+        body: sign_data.to_json,
+        headers: { "Content-Type" => "application/json" },
+      ).body)
+      process_result(result)
+    end
+
+    # 退分操作(购分退款)（个人账号->退分子账号）
     def points_refund(transaction_id)
       sign_data = {
         transactionId: transaction_id,
@@ -169,7 +183,7 @@ module LianjifenClient
       process_result(result)
     end
 
-    # 查询是否能退分
+    # 查询是否能退分(购分退款)（个人账号->退分子账号）
     def points_can_refund(transaction_id)
       sign_data = {
         transactionId: transaction_id,
