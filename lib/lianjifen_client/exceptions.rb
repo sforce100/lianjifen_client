@@ -13,5 +13,8 @@ module LianjifenClient
     class ServerLogicError < ExceptionBase
     end
 
+    class SignError < ExceptionBase
+    end
+
   end
 end

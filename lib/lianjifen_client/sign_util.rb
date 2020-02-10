@@ -1,6 +1,14 @@
 module LianjifenClient
   class SignUtil
     class << self
+      #### 验证支付签名 ####
+      def notify_sign_check!(sign_type, params)
+        params[:lapp_secret_key] = LianjifenClient.config[sign_type]["app_secret_key"]
+        sign_data = params.except(:utf8, :authenticity_token, :action, :lapp_key, :callbackUrl, :retryCount, :sign)
+        sign_str = generate_sign_str_with_blank(sign_data)
+        sign = Digest::MD5.hexdigest(sign_str).upcase
+        LianjifenClient::Exceptions::SignError.new(message: '签名错误') if sign != params[:sign]
+      end
       #### api接口签名 ####
       def generate_api_sign_data(sign_data, token)
         sign_str = generate_sign_str_with_blank(sign_data)

@@ -230,13 +230,16 @@ module LianjifenClient
     end
 
     # 生成预支付订单
-    def perpay_order(order_no: nil, amount: 0, remark: "", token: "")
+    def perpay_order(order_no: nil, amount: 0, remark: "", token: "", notify_url: "")
       sign_data = {
         outOrderId: order_no,
         amount: amount,
         remark: remark,
         lianToken: token,
       }
+      if notify_url.present?
+        sign_data[:payResultCallbackUrl] = notify_url
+      end
       result = JSON.parse(self.class.post(
         "#{base_uri}/v1/sa/transaction/generateOrder?#{lianjifen_lapp_sign(sign_data).to_query}",
         body: sign_data.to_json,
