@@ -280,7 +280,7 @@ module LianjifenClient
       request_data = {
         lianToken: token,
         preOrderId: trade_no,
-        redirectUrl: Base64.urlsafe_encode64(redirect_url),
+        redirectUrl: URI.encode(redirect_url),
       }
       sign_data = SignUtil.generate_lapp_sign_data("lianjifen_app", request_data)
       "#{base_uri}/v1/sa/transaction/payPage?#{sign_data.to_query}"
