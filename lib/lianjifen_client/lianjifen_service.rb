@@ -283,7 +283,7 @@ module LianjifenClient
         redirectUrl: Base64.urlsafe_encode64(redirect_url),
       }
       sign_data = SignUtil.generate_lapp_sign_data("lianjifen_app", request_data)
-      "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api#{base_uri}/v1/sa/transaction/payPage?#{sign_data.to_query}"
+      "#{base_uri}/v1/sa/transaction/payPage?#{sign_data.to_query}"
     end
   end
 end
