@@ -276,11 +276,12 @@ module LianjifenClient
     end
 
     # 生成支付跳转URL
-    def generate_payment_url(token: nil, trade_no: nil, redirect_url: "")
+    def generate_payment_url(token: nil, trade_no: nil, redirect_url: "", back_url: "")
       request_data = {
         lianToken: token,
         preOrderId: trade_no,
         redirectUrl: Base64.urlsafe_encode64(redirect_url),
+        backUrl: Base64.urlsafe_encode64(back_url),
       }
       sign_data = SignUtil.generate_lapp_sign_data("lianjifen_app", request_data)
       "#{base_uri}/v1/sa/transaction/payPage?#{sign_data.to_query}"
