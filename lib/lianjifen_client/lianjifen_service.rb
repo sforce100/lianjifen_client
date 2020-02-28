@@ -8,6 +8,21 @@ module LianjifenClient
       "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api"
     end
 
+    # 同步实名信息
+    def ctf_sync(phone_number, id_card, name)
+      sign_data = {
+        phoneNumber: phone_number,
+        idCard: id_card,
+        name: name,
+      }
+      result = JSON.parse(self.class.post(
+        "#{base_uri}/v1/merchant/user?#{lianjifen_sign(sign_data).to_query}",
+        body: sign_data.to_json,
+        headers: { "Content-Type" => "application/json" },
+      ).body)
+      process_result(result)
+    end
+
     # 商户创建用户
     def create_user(phone_number)
       sign_data = {
