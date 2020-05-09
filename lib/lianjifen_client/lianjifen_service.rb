@@ -277,21 +277,6 @@ module LianjifenClient
       process_result(result)
     end
 
-    # 支付网关小程序签名
-    # https://doc.xpayai.com/index.php?s=/17&page_id=1456
-    def payment_xcx(order_no, wx_open_id)
-      sign_data = {
-        orderNo: order_no,
-        wxOpenId: wx_open_id,
-      }
-      result = JSON.parse(self.class.post(
-        "#{base_uri}/v1/payment/sign/paymentGatewayWxXcx?#{lianjifen_lapp_sign(sign_data).to_query}",
-        body: sign_data.to_json,
-        headers: { "Content-Type" => "application/json" },
-      ).body)
-      process_result(result)
-    end
-
     def process_result(result)
       @request_result = result
 
