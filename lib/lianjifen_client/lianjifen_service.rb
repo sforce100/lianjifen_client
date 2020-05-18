@@ -2,8 +2,6 @@ module LianjifenClient
   class LianjifenService < LianjifenBaseService
     include HTTParty
 
-    attr_accessor :service_error
-
     def base_uri
       "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api"
     end

@@ -1,7 +1,8 @@
 module LianjifenClient
   class LianjifenBaseService
     attr_accessor :request_result
-
+    attr_accessor :service_error
+    
     # 链积分商户
     def lianjifen_sign(request_data)
       sign_data = SignUtil.generate_common_sign_data("lianjifen", request_data)
@@ -29,6 +30,19 @@ module LianjifenClient
         result["data"]
       else
         Rails.logger.error "[#{DateTime.now}] lianjifen error url: #{request_url} => #{result}"
+        nil
+      end
+    end
+
+    def process_result(result)
+      @request_result = result
+
+      Rails.logger.info "lianjifen service result => #{result}"
+      if result["meta"]["code"] == 0
+        result["data"]
+      else
+        Rails.logger.error "lianjifen service error => #{result}"
+        @service_error = LianjifenClient::Exceptions::ServerLogicError.new(code: result["meta"]["code"], data: result)
         nil
       end
     end
