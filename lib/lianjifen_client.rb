@@ -11,3 +11,5 @@ require "lianjifen_client/lianjifen_base_service"
 require "lianjifen_client/lianjifen_service"
 require "lianjifen_client/lianjifen_event_service"
 require "lianjifen_client/lianjifen_operate_service"
+
+require "lianjifen_client/lapp_services/payment_service"
