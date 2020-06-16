@@ -1,6 +1,6 @@
 module LianjifenClient
   module LappServices
-    class LianjifenService < LianjifenBaseService
+    class PaymentService < LianjifenBaseService
       include HTTParty
 
       attr_accessor :service_error
