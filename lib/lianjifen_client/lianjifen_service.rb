@@ -228,7 +228,6 @@ module LianjifenClient
      # 生成积分商城授权登录URL
     def generate_auth_points_shop_url(phone_number, user_no)
       request_data = {
-        lappKey: LianjifenClient.config["lianjifen_app"]["app_key"],
         phoneNumber: phone_number,
         outUserNo: user_no,
         type: 'MALL'
