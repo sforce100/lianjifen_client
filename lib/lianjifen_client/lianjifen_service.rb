@@ -233,7 +233,7 @@ module LianjifenClient
         type: 'MALL'
       }
       sign_data = SignUtil.generate_common_sign_data("lianjifen", request_data)
-      "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/consumer/user/auth/api/v1/redirectExchange?#{sign_data.to_query}"
+      "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/consumer/user/auth/api/v1/ruyuRedirectExchange?#{sign_data.to_query}"
     end
 
     # 生成重置支付密码URL
