@@ -225,6 +225,18 @@ module LianjifenClient
       "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/open/api/v1/strategyApp/authPage?#{sign_data.to_query}"
     end
 
+     # 生成积分商城授权登录URL
+    def generate_auth_points_shop_url(phone_number, user_no)
+      request_data = {
+        lappKey: Settings.lianjifen_app.app_key,
+        phoneNumber: phone_number,
+        outUserNo: user_no,
+        type: 'MALL'
+      }
+      sign_data = SignUtil.generate_common_sign_data("lianjifen", request_data)
+      "#{LianjifenClient.config["lianjifen"]["api_host"]}/yunjiafen/consumer/user/auth/api/v1/redirectExchange?#{sign_data.to_query}"
+    end
+
     # 生成重置支付密码URL
     # https://doc.xpayai.com/index.php?s=/17&page_id=1265
     def generate_resetpw_url(token, redirect_url = nil)
