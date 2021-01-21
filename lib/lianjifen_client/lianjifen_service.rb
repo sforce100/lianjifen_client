@@ -310,5 +310,32 @@ module LianjifenClient
       sign_data = SignUtil.generate_lapp_sign_data("lianjifen_app", request_data)
       "#{base_uri}/v1/sa/transaction/payPage?#{sign_data.to_query}"
     end
+
+    def spdb_active_users
+      # 活动领取状态，为空默认为完成首单消费（0，2，3），（0未领取，1不能领取，2已领取，3已退款）
+      sign_data = {
+        # activityStatus: [],
+      }
+      result = JSON.parse(self.class.post(
+        "#{base_uri}/v1/user/wallet/consume/activity/users?#{lianjifen_sign(sign_data).to_query}",
+        body: sign_data.to_json,
+        headers: { "Content-Type" => "application/json" },
+      ).body)
+      process_result(result)
+    end
+
+    def spdb_user_status(phone, symbol="ruyu")
+      sign_data = {
+        phoneNumber: phone,
+        symbol: symbol
+      }
+      result = JSON.parse(self.class.post(
+        "#{base_uri}/v1/user/wallet/consume/activity/users?#{lianjifen_sign(sign_data).to_query}",
+        body: sign_data.to_json,
+        headers: { "Content-Type" => "application/json" },
+      ).body)
+      process_result(result)
+    end
+
   end
 end
