@@ -330,7 +330,7 @@ module LianjifenClient
         symbol: symbol
       }
       result = JSON.parse(self.class.post(
-        "#{base_uri}/v1/user/wallet/consume/activity/users?#{lianjifen_sign(sign_data).to_query}",
+        "#{base_uri}/v1/user/wallet/consume/activity/user/complete?#{lianjifen_sign(sign_data).to_query}",
         body: sign_data.to_json,
         headers: { "Content-Type" => "application/json" },
       ).body)
